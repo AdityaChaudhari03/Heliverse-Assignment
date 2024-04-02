@@ -5,7 +5,6 @@ import {
   setSearchTerm,
   setFilters,
   filterUsers,
-  selectUser,
 } from "../redux/usersReducer";
 import axios from "axios";
 import { Link, Route, Routes } from "react-router-dom";

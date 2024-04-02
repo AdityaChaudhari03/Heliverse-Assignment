@@ -69,9 +69,9 @@ const TeamMembers = () => {
                 className="border border-gray-300 p-4 rounded-md"
                 onClick={() => handleUserClick(member._id)}
               >
-                <a href="#" className="text-blue-500 hover:underline">
+                <h2 className="text-blue-500 hover:underline">
                   {member._id}
-                </a>
+                </h2>
               </li>
             ))}
           </ul>
