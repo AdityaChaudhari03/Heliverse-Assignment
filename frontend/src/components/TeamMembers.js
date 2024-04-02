@@ -10,7 +10,7 @@ const TeamMembers = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/team")
+      .get("https://heliverse-assignment-1.onrender.com/api/team")
       .then((response) => {
         setTeamMembers(response?.data?.members);
         setLoading(false);
@@ -24,7 +24,7 @@ const TeamMembers = () => {
 
   const handleUserClick = async (userId) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/users/${userId}`, {});
+      const response = await axios.put(`https://heliverse-assignment-1.onrender.com/api/users/${userId}`, {});
       setSelectedUser(response.data);
     } catch (error) {
       console.error("Error fetching user details:", error);

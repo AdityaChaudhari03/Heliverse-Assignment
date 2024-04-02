@@ -46,7 +46,7 @@ const UserList = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/users?page=${currentPage}`)
+      .get(`https://heliverse-assignment-1.onrender.com/api/users?page=${currentPage}`)
       .then((response) => {
         dispatch(setUsers(response.data));
         setTotalPages(response.headers["x-total-pages"]);
@@ -73,7 +73,7 @@ const UserList = () => {
     const selectedUser = filteredUsers.find((user) => user.id === userId);
     setSelectedUsers([...selectedUsers, selectedUser]);
     axios
-      .post("http://localhost:5000/api/teams", { userId })
+      .post("https://heliverse-assignment-1.onrender.com/api/teams", { userId })
       .then((response) => {
         console.log(response.data);
       })
