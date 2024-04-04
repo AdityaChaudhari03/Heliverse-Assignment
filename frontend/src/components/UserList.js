@@ -38,7 +38,6 @@ const NavigationMenu = () => {
 const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedUsers, setSelectedUsers] = useState([]);
   const dispatch = useDispatch();
   const { filteredUsers, searchTerm, filters } = useSelector(
     (state) => state.users
@@ -46,8 +45,11 @@ const UserList = () => {
 
   useEffect(() => {
     axios
-      .get(`https://heliverse-assignment-1.onrender.com/api/users?page=${currentPage}`)
+      .get(
+        `https://heliverse-assignment-1.onrender.com/api/users?page=${currentPage}`
+      )
       .then((response) => {
+        // console.log(response.data);
         dispatch(setUsers(response.data));
         setTotalPages(response.headers["x-total-pages"]);
       })
@@ -70,10 +72,9 @@ const UserList = () => {
   };
 
   const handleSelectUser = (userId) => {
-    const selectedUser = filteredUsers.find((user) => user.id === userId);
-    setSelectedUsers([...selectedUsers, selectedUser]);
+    console.log(userId);
     axios
-      .post("https://heliverse-assignment-1.onrender.com/api/teams", { userId })
+      .post(`https://heliverse-assignment-1.onrender.com/api/teams/${userId}`)
       .then((response) => {
         console.log(response.data);
       })
@@ -172,7 +173,7 @@ const UserList = () => {
               {user.available.toString()}
             </p>
             <button
-              onClick={() => handleSelectUser(user.id)}
+              onClick={() => handleSelectUser(user._id)}
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
               Add to Team

@@ -12,6 +12,7 @@ const TeamMembers = () => {
     axios
       .get("https://heliverse-assignment-1.onrender.com/api/team")
       .then((response) => {
+        console.log(response);
         setTeamMembers(response?.data?.members);
         setLoading(false);
       })
@@ -24,7 +25,10 @@ const TeamMembers = () => {
 
   const handleUserClick = async (userId) => {
     try {
-      const response = await axios.put(`https://heliverse-assignment-1.onrender.com/api/users/${userId}`, {});
+      const response = await axios.put(
+        `https://heliverse-assignment-1.onrender.com/api/users/${userId}`,
+        {}
+      );
       setSelectedUser(response.data);
     } catch (error) {
       console.error("Error fetching user details:", error);
@@ -69,9 +73,7 @@ const TeamMembers = () => {
                 className="border border-gray-300 p-4 rounded-md"
                 onClick={() => handleUserClick(member._id)}
               >
-                <h2 className="text-blue-500 hover:underline">
-                  {member._id}
-                </h2>
+                <h2 className="text-blue-500 hover:underline">{member._id}</h2>
               </li>
             ))}
           </ul>
@@ -82,4 +84,3 @@ const TeamMembers = () => {
 };
 
 export default TeamMembers;
-

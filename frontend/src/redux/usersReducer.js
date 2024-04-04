@@ -27,7 +27,6 @@ const usersSlice = createSlice({
       state.filters = { ...state.filters, ...action.payload };
     },
     filterUsers(state) {
-      // Filter users based on search term and filters
       state.filteredUsers = state.users.filter((user) => {
         const searchTermMatch =
           user.last_name
