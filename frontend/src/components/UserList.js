@@ -45,9 +45,7 @@ const UserList = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `https://heliverse-assignment-1.onrender.com/api/users?page=${currentPage}`
-      )
+      .get(`https://heliverse-assignment-1.onrender.com/api/users?page=${currentPage}`)
       .then((response) => {
         // console.log(response.data);
         dispatch(setUsers(response.data));
@@ -161,7 +159,12 @@ const UserList = () => {
             key={user.id}
             className="bg-white border border-gray-200 rounded-lg p-4 transition duration-300 ease-in-out transform hover:shadow-lg hover:-translate-y-1"
           >
-            <h3 className="text-lg font-semibold mb-2">{user.first_name}</h3>
+            <h3 className="text-lg font-semibold mb-2">
+              {user.first_name} {user.last_name}
+            </h3>
+            <p className="text-gray-600 mb-2">
+              <span className="font-semibold">Email:</span> {user.email}
+            </p>
             <p className="text-gray-600 mb-2">
               <span className="font-semibold">Domain:</span> {user.domain}
             </p>

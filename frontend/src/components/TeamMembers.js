@@ -23,16 +23,14 @@ const TeamMembers = () => {
       });
   }, []);
 
-  const handleUserClick = async (userId) => {
+  const handleDetailsClick = async (memberId) => {
     try {
-      const response = await axios.put(
-        `https://heliverse-assignment-1.onrender.com/api/users/${userId}`,
-        {}
-      );
-      setSelectedUser(response.data);
+      const response = await axios.get(`https://heliverse-assignment-1.onrender.com/api/team/${memberId}`);
+      console.log("Member details:", response.data);
+      // Handle displaying member details in your UI
     } catch (error) {
-      console.error("Error fetching user details:", error);
-      setError("Error fetching user details");
+      console.error("Error fetching member details:", error);
+      // Handle error
     }
   };
 
@@ -66,17 +64,27 @@ const TeamMembers = () => {
             <pre>{JSON.stringify(selectedUser, null, 2)}</pre>
           </div>
         ) : (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {teamMembers.map((member) => (
-              <li
+              <div
                 key={member._id}
-                className="border border-gray-300 p-4 rounded-md"
-                onClick={() => handleUserClick(member._id)}
+                className="bg-white border border-gray-200 rounded-lg p-4 transition duration-300 ease-in-out transform hover:shadow-lg hover:-translate-y-1"
               >
-                <h2 className="text-blue-500 hover:underline">{member._id}</h2>
-              </li>
+                <h3 className="text-lg font-semibold mb-2">
+                  {member.first_name} {member.last_name}
+                </h3>
+                <p className="text-gray-600 mb-2">
+                  <span className="font-semibold">Domain:</span> {member.domain}
+                </p>
+                <p className="text-gray-600 mb-2">
+                  <span className="font-semibold">Gender:</span> {member.gender}
+                </p>
+                <button onClick={() => handleDetailsClick(member._id)} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+              Details
+            </button>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </div>

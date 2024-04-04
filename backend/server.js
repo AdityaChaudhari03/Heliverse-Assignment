@@ -32,59 +32,61 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-// app.get("/api/users/:id", async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id);
-//     res.json(user);
-//   } catch (err) {
-//     console.error("Error fetching user:", err);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// });
+app.get("/api/team/:id", async (req, res) => {
+  try {
+    const memberId = req.params.id;
+    const memberDetails = await Team.findById(memberId);
 
-// app.get("/api/team/:id", async (req, res) => {
-//   try {
-//     const team = await Team.findById(req.params.id);
-//     res.json(team);
-//   } catch (err) {
-//     console.error("Error fetching team:", err);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// });
-//   try {
-//     const teamMembers = await Team.find().populate({
-//       path: "users",
-//       select: "first_name",
-//     });
-//     console.log(teamMembers);
-//     res.json({ members: teamMembers });
-//   } catch (err) {
-//     console.error("Error fetching team members:", err);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// });
+    if (!memberDetails) {
+      return res.status(404).json({ message: "Team member not found" });
+    }
+
+    res.json({ memberDetails });
+  } catch (error) {
+    console.error("Error fetching team member details:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
 app.post("/api/teams/:id", async (req, res) => {
   try {
     const userId = req.params.id;
-
-    // Find the user by ID
     const user = await User.findById(userId);
-    console.log(user);
-    // Check if the user exists
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Create a new team document with the user's first_name and last_name
-    const team = await Team.create(user);
+    // Extract necessary fields from user object
+    const { first_name, last_name, email, gender, domain, avatar } = user;
 
-    // Respond with success message
+    // Create a new team document with the extracted user details
+    const team = await Team.create({
+      first_name,
+      last_name,
+      email,
+      gender,
+      avatar,
+      domain,
+    });
+
     res
       .status(201)
       .json({ message: "User added to the team successfully", team });
   } catch (err) {
     console.error("Error adding user to team:", err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+app.get("/api/team", async (req, res) => {
+  try {
+    // Fetch team members from the database
+    const teamMembers = await Team.find();
+
+    // Send the team members data in the response
+    res.json({ members: teamMembers });
+  } catch (error) {
+    console.error("Error fetching team members:", error);
     res.status(500).json({ message: "Server Error" });
   }
 });
