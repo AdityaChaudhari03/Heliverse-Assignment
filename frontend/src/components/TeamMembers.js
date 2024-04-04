@@ -10,7 +10,7 @@ const TeamMembers = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/team")
+      .get("https://heliverse-assignment-77x1.onrender.com/api/team")
       .then((response) => {
         console.log(response);
         setTeamMembers(response?.data?.members);
@@ -25,7 +25,7 @@ const TeamMembers = () => {
 
   const handleDetailsClick = async (memberId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/team/${memberId}`);
+      const response = await axios.get(`https://heliverse-assignment-77x1.onrender.com/api/team/${memberId}`);
       console.log("Member details:", response.data);
       // Handle displaying member details in your UI
     } catch (error) {
