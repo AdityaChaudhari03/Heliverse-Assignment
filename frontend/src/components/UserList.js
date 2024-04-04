@@ -45,7 +45,7 @@ const UserList = () => {
 
   useEffect(() => {
     axios
-      .get(`https://heliverse-assignment-1.onrender.com/api/users?page=${currentPage}`)
+      .get(`http://localhost:5000/api/users?page=${currentPage}`)
       .then((response) => {
         // console.log(response.data);
         dispatch(setUsers(response.data));
@@ -72,7 +72,7 @@ const UserList = () => {
   const handleSelectUser = (userId) => {
     console.log(userId);
     axios
-      .post(`https://heliverse-assignment-1.onrender.com/api/teams/${userId}`)
+      .post(`http://localhost:5000/api/teams/${userId}`)
       .then((response) => {
         console.log(response.data);
       })
